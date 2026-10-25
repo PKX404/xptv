@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="300dp" android:layout_height="wrap_content"
+    android:background="@drawable/mini_profile_background" android:clipToOutline="true"
+    android:elevation="16dp" android:fillViewport="true" android:overScrollMode="never">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:gravity="center_horizontal" android:padding="20dp">
+        <FrameLayout android:layout_width="138dp" android:layout_height="128dp">
+            <com.pkx404.xparty.SquircleImageView android:id="@+id/mini_avatar" android:layout_width="110dp" android:layout_height="110dp"
+                android:layout_gravity="center" android:scaleType="centerCrop" android:src="@drawable/avatar_placeholder"
+                android:contentDescription="@string/mini_open_profile" android:clickable="true" android:focusable="true"
+                android:foreground="?android:attr/selectableItemBackground"/>
+            <ImageView android:layout_width="match_parent" android:layout_height="match_parent"
+                android:src="@drawable/avatar_sparkle" android:importantForAccessibility="no"/>
+        </FrameLayout>
+        <TextView android:id="@+id/mini_name" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:gravity="center" android:textColor="#FFFFFF" android:textSize="18sp" android:textStyle="bold"
+            android:fontFamily="@font/inter_medium" android:maxLines="2" android:ellipsize="end"/>
+        <TextView android:id="@+id/mini_handle" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:layout_marginTop="5dp" android:layout_marginBottom="20dp" android:gravity="center"
+            android:textColor="#CDC3D6" android:textSize="13sp" android:maxLines="1" android:ellipsize="end"/>
+        <Button android:id="@+id/mini_profile" style="@style/RaveMiniButton" android:layout_width="match_parent"
+            android:layout_height="48dp" android:text="@string/mini_view_profile" android:drawableStart="@drawable/ic_mini_profile"/>
+        <Button android:id="@+id/mini_message" style="@style/RaveMiniButton" android:layout_width="match_parent"
+            android:layout_height="48dp" android:layout_marginTop="8dp" android:text="@string/mini_message" android:drawableStart="@drawable/ic_mini_message"/>
+        <Button android:id="@+id/mini_friend" style="@style/RaveMiniButton" android:layout_width="match_parent"
+            android:layout_height="48dp" android:layout_marginTop="8dp" android:text="@string/mini_add_friend" android:drawableStart="@drawable/ic_mini_friend"/>
+        <Button android:id="@+id/mini_mute" style="@style/RaveMiniButton" android:layout_width="match_parent"
+            android:layout_height="48dp" android:layout_marginTop="8dp" android:text="@string/mini_mute" android:drawableStart="@drawable/ic_mini_mute"/>
+        <Button android:id="@+id/mini_report" style="@style/RaveMiniButton" android:layout_width="match_parent"
+            android:layout_height="48dp" android:layout_marginTop="8dp" android:text="@string/mini_report" android:drawableStart="@drawable/ic_mini_report"/>
+    </LinearLayout>
+</ScrollView>

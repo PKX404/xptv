@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="mini_open_profile">Open full profile</string>
+    <string name="mini_view_profile">View profile</string>
+    <string name="mini_message">Message</string>
+    <string name="mini_add_friend">Add friend</string>
+    <string name="mini_mute">Mute</string>
+    <string name="mini_unmute">Unmute</string>
+    <string name="mini_report">Report</string>
+</resources>

@@ -1,0 +1,45 @@
+name: Build Xparty APK
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths: ['android/**', '.github/workflows/android-apk.yml']
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+      - uses: android-actions/setup-android@v3
+      - uses: gradle/actions/setup-gradle@v4
+      - name: Install Android SDK packages
+        run: sdkmanager 'platforms;android-35' 'build-tools;35.0.0'
+      - name: Build debug APK
+        run: |
+          chmod +x android/gradlew
+          cd android
+          ./gradlew :app:assembleDebug --no-daemon --console=plain
+      - name: Build release with the existing signing key when configured
+        env:
+          KEYSTORE_B64: ${{ secrets.XPARTY_KEYSTORE_BASE64 }}
+          XPARTY_STORE_PASS: ${{ secrets.XPARTY_STORE_PASS }}
+        run: |
+          if [ -n "$KEYSTORE_B64" ] && [ -n "$XPARTY_STORE_PASS" ]; then
+            export XPARTY_KEYSTORE="$RUNNER_TEMP/xparty-release.jks"
+            printf '%s' "$KEYSTORE_B64" | base64 --decode > "$XPARTY_KEYSTORE"
+            chmod 600 "$XPARTY_KEYSTORE"
+            trap 'rm -f "$XPARTY_KEYSTORE"' EXIT
+            bash android/build-apk.sh
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Xparty-1.2.0
+          path: |
+            android/app/build/outputs/apk/debug/app-debug.apk
+            android/build/Xparty-1.2.0.apk
+          if-no-files-found: error

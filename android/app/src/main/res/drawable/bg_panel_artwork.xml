@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android"><item><shape><solid android:color="#1E1528"/><corners android:topLeftRadius="24dp" android:topRightRadius="24dp"/></shape></item><item android:drawable="@drawable/bg_artwork"/><item><shape><corners android:topLeftRadius="24dp" android:topRightRadius="24dp"/><gradient android:angle="270" android:startColor="#007C5CFF" android:endColor="#147C5CFF"/></shape></item></layer-list>
