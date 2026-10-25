@@ -15,7 +15,9 @@ app.use(express.static(path.join(__dirname, "public")));
 app.get("/", (req, res) => {
   res.sendFile(path.join(__dirname, "index.html"));
 });
-
+app.get("/health", (req, res) => {
+  res.send(">>> New server code deployed <<<");
+});
 app.listen(PORT, () => {
   console.log(">>> Starting new server code <<<");
   console.log(`Server running on port ${PORT}`);
