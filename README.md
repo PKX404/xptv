@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Xparty
 
 [Open Xparty 0.10.0](https://pkxparty.onrender.com)
@@ -15,3 +16,6 @@ Inside `xparty-service`: `npm ci`, `npm test`, `npm run check`, then `npm start`
 This is the core room-improvement release, not completion of every requested feature. Google/OTP and cross-room account messaging require provider setup; TURN credentials and a virtual-browser worker service are not configured. Netflix/Prime/virtual-browser support is not implemented. Actual two-device/different-network media tests and real YouTube streaming validation remain outstanding.
 
 See [release notes](xparty-service/RELEASE-0.10.0.md) and the [complete improvement map](xparty-service/docs/IMPROVEMENT-MAP-20261001.md).
+=======
+# XParty+\n\nIndependent XParty+ R1 by PKX404.\n
+>>>>>>> f67bb39a7397ec83767fd6cd2e932b0877d83b4e
