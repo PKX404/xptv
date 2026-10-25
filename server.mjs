@@ -1,1 +1,21 @@
-import express from"express";import{createServer}from"http";import{Server}from"socket.io";import crypto from"crypto";import path from"path";import{fileURLToPath}from"url";const app=express(),server=createServer(app),io=new Server(server),rooms=new Map(),dir=path.dirname(fileURLToPath(import.meta.url));app.use(express.static(path.join(dir,"public")));app.get("/health",(_,r)=>r.json({ok:true,product:"XParty+",release:"R1"}));const code=()=>{const a="ABCDEFGHJKLMNPQRSTUVWXYZ23456789";let x="XP";for(let i=0;i<5;i++)x+=a[Math.floor(Math.random()*a.length)];return x.slice(0,4)+"-"+x.slice(4)},view=r=>({code:r.code,host:r.host,playback:r.playback,people:[...r.people.values()].map(({id,name})=>({id,name}))});io.on("connection",s=>{s.on("create-room",(d={},cb)=>{let c;do c=code();while(rooms.has(c));const id=crypto.randomUUID(),r={code:c,host:id,people:new Map(),playback:{videoId:"",playing:false,updatedAt:Date.now()}};r.people.set(id,{id,name:d.name||"Host"});rooms.set(c,r);s.data={room:c,id};s.join(c);cb?.({ok:true,room:view(r)})});s.on("join-room",(d={},cb)=>{const r=rooms.get(String(d.code||"").toUpperCase());if(!r)return cb?.({ok:false,error:"Room not found"});if(r.people.size>=2)return cb?.({ok:false,error:"Room full"});const id=crypto.randomUUID();r.people.set(id,{id,name:d.name||"Guest"});s.data={room:r.code,id};s.join(r.code);io.to(r.code).emit("room",view(r));cb?.({ok:true,room:view(r)})});s.on("playback",d=>{const r=rooms.get(s.data?.room);if(r){r.playback={...r.playback,...d,updatedAt:Date.now()};s.to(r.code).emit("playback",r.playback)}});s.on("chat",m=>{const r=rooms.get(s.data?.room),p=r?.people.get(s.data?.id);if(r&&p)io.to(r.code).emit("chat",{name:p.name,text:String(m||"").slice(0,500)})});s.on("disconnect",()=>{const r=rooms.get(s.data?.room);if(!r)return;r.people.delete(s.data.id);if(!r.people.size)return void rooms.delete(r.code);if(r.host===s.data.id)r.host=[...r.people.keys()][0];io.to(r.code).emit("room",view(r))})});server.listen(process.env.PORT||10000);
+import express from "express";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Serve static files (CSS, JS, images, etc.)
+app.use(express.static(__dirname + "/public"));
+
+// Serve index.html for the root route
+app.get("/", (req, res) => {
+  res.sendFile(path.join(__dirname, "index.html"));
+});
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
